@@ -155,9 +155,16 @@ func (m *Mac0Message[T]) MarshalCBOR() ([]byte, error) {
 		return nil, errors.New("cose/cose: Mac0Message.MarshalCBOR: should call Mac0Message.Compute")
 	}
 
+	//return key.MarshalCBOR(cbor.Tag{
+	//	Number:  iana.CBORTagCWT,
+	//	Content: m.mm,
+	//})
 	return key.MarshalCBOR(cbor.Tag{
-		Number:  iana.CBORTagCOSEMac0,
-		Content: m.mm,
+		Number: iana.CBORTagCWT,
+		Content: cbor.Tag{
+			Number:  iana.CBORTagCOSEMac0,
+			Content: m.mm,
+		},
 	})
 }
 

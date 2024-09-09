@@ -264,8 +264,11 @@ func (m *EncryptMessage[T]) MarshalCBOR() ([]byte, error) {
 
 	m.mm.Recipients = m.recipients
 	return key.MarshalCBOR(cbor.Tag{
-		Number:  iana.CBORTagCOSEEncrypt,
-		Content: m.mm,
+		Number: iana.CBORTagCOSEEncrypt,
+		Content: cbor.Tag{
+			Number:  iana.CBORTagCOSEEncrypt,
+			Content: m.mm,
+		},
 	})
 }
 
